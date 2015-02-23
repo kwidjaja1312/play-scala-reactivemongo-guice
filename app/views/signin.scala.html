@@ -1,0 +1,78 @@
+@******************
+@author kwidjaja
+@since 18/02/2015
+******************@
+@(returnTo: Option[String], form: Form[(String, String)])(implicit header: RequestHeader)
+
+@import views.html.helper.CSRF
+
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Sign In</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+            <meta name="description" content="">
+            <meta name="keywords" content="">
+        </head>
+        <body>
+            <div id="wrapper">
+                @form.error("errors") match {
+                    case Some(e) => {
+                        <div class="error"><span class="label event-important">@e.message</span></div>
+                    }
+                    case None => {
+                            &nbsp;
+                    }
+                }
+            <div>
+                <div>
+                    <img src="@routes.Assets.at("images/favicon.png")"/>
+                </div>
+                <form id="sign-in" action="@routes.UsersController.authenticate().url" method="post">
+                    @CSRF.formField
+
+                <div>
+					<div>
+                        <span>Sign In</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <div class="input-group input-group-lg rounded">
+                            <input type="text" placeholder="Username or email" name="username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-lg rounded">
+                            <input type="password" placeholder="Password" name="password">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div>
+                                <div class="ckbox ckbox-theme">
+                                    <input id="rememberme" type="checkbox">
+                                    <label for="rememberme" class="rounded">Remember me</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn rounded" id="login-btn">Sign In</button>
+                    </div>
+                </div>
+                </form>
+                <br/>
+                <p class="text-muted text-center animated fadeinup">Need an account?
+                    <a href="@routes.Application.login(returnTo).url"> Sign up free</a>
+                </p>
+            </div>
+            </div>
+
+            <script src="@routes.Assets.at("javascripts/external/jquery/jquery.min.js")"></script>
+            <script src="@routes.Assets.at("javascripts/external/bootstrap/bootstrap.min.js")"></script>
+        </body>
+    </html>
